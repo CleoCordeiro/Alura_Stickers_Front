@@ -61,7 +61,7 @@ export default {
 
 
 
-            Axios.post('http://imersaojava.herokuapp.com/stickers', sticker, { responseType: 'blob' })
+            Axios.post('https://imersaojava.herokuapp.com/stickers', sticker, { responseType: 'blob' })
                 .then(response => {
                     var filename = response.headers['content-disposition'].split('filename=')[1].replaceAll('"', '');
                     FileSaver.saveAs(new Blob([response.data]), filename);
