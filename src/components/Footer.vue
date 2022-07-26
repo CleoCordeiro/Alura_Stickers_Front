@@ -1,28 +1,34 @@
 <template>
-    <div id="footer">
+    <div class="footer">
 
-        <v-row justify="center" align="center" rows="5" cols="5" justify-content="space-between">
-            <v-col cols="12" xs="12" sm="6" md="4">
-                <v-toolbar-title class="white--text" justify="center" align="center">Cléo Maia Cordeiro &copy; 2022
-                </v-toolbar-title>
 
+        <div>
+            <v-toolbar-title class="white--text" justify="center" align="center">Cléo Maia Cordeiro &copy; 2022
+            </v-toolbar-title>
+        </div>
+
+        <div id="socialMedia">
+            <div>
                 <a href="https://www.linkedin.com/in/cleocordeiro/"><img
                         src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white"
                         alt="Linkedin"></a>
-
+            </div>
+            <div>
                 <a href="https://www.facebook.com/cleo.m.cordeiro/"><img
                         src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&amp;logo=facebook&amp;logoColor=white"
                         alt="Facebook"></a>
 
+            </div>
+            <div>
                 <a href="https://www.instagram.com/cleomaiacordeiro/"><img
                         src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&amp;logo=instagram&amp;logoColor=white"
                         alt="Instagram"></a>
-            </v-col>
+            </div>
+        </div>
 
 
 
 
-        </v-row>
     </div>
 
 
@@ -35,13 +41,26 @@ export default {
 </script>
 
 <style scoped>
-#footer {
+.footer {
     height: 100px;
     background-color: #222;
     border-top: 4px solid #111;
     color: #FCBA03;
-    justify-content: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 100%;
+
+}
+
+#socialMedia {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 400px;
+    padding: 10px;
+
 }
 </style>

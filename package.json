@@ -4,17 +4,11 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "backend": "json-server --watch db/db.json"
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "core-js": "^3.6.5",
     "file-saver": "^2.0.5",
-    "file-system": "^2.2.2",
-    "fs": "^0.0.1-security",
-    "json-server": "^0.17.0",
-    "path": "^0.12.7",
-    "stream": "^0.0.2",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0",
