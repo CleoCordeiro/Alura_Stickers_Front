@@ -1,23 +1,30 @@
 <template>
 
     <v-container fluid>
+        <ul class="errorMessage" v-for="erro in erros">
+            <v-toolbar-title class="white--text">{{ erro.erro }}: {{ erro.message }}</v-toolbar-title>
+        </ul>
+
         <v-row justify="center" align="center">
+
+
             <v-col cols="12" xs="12" sm="6" md="4">
 
-                <v-toolbar-title class="white--text" justify="center" align="center">Nome do Sticker</v-toolbar-title>
+                <v-toolbar-title class="white--text">Nome do Sticker</v-toolbar-title>
                 <v-text-field v-model="name" label="Digite o nome do sticker" dark filled solo flat
                     background-color="transparent" rounded outlined>
                 </v-text-field>
                 <v-spacer></v-spacer>
-                <v-toolbar-title class="white--text" justify="center" align="center">Texto do Sticker</v-toolbar-title>
+                <v-toolbar-title class="white--text">Texto do Sticker</v-toolbar-title>
                 <v-text-field v-model="textoSticker" label="Digite o texto do sticker" dark filled solo flat
                     background-color="transparent" rounded outlined>
                 </v-text-field>
-                <v-toolbar-title class="white--text" justify="center" align="center">URL do Sticker</v-toolbar-title>
+                <v-toolbar-title class="white--text">URL do Sticker</v-toolbar-title>
                 <v-text-field v-model="imageUrl" label="Digite a URL do sticker" dark filled solo flat
                     background-color="transparent" rounded outlined>
                 </v-text-field>
-                <v-btn class="donwload-button" @click="download()" block color="dark-blue" elevation="12">
+                <v-btn class="donwload-button" :disabled="!isActive" @click="download()" block color="dark-blue"
+                    elevation="12">
                     Criar Sticker</v-btn>
             </v-col>
         </v-row>
@@ -30,6 +37,8 @@
 <script>
 import Axios from 'axios';
 
+
+
 export default {
     mame: 'Search',
 
@@ -37,7 +46,9 @@ export default {
         return {
             name: '',
             imageUrl: '',
-            textoSticker: ''
+            textoSticker: '',
+            erros: [],
+            isActive: true
         }
     },
 
@@ -49,27 +60,31 @@ export default {
             Stickerdownload.downloadImage();
         },
         async download() {
+            this.isActive = false;
             var FileSaver = require('file-saver');
-
-
-
             const sticker = {
                 "name": this.name,
                 "imageUrl": this.imageUrl,
                 "textoSticker": this.textoSticker
             };
+            const headers = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            };
 
 
-
-            Axios.post('https://imersaojava.herokuapp.com/stickers', sticker, { responseType: 'blob' })
+            await Axios.post('https://imersaojava.herokuapp.com/stickers', sticker, { responseType: 'arraybuffer' }, { headers: headers })
                 .then(response => {
-                    var filename = response.headers['content-disposition'].split('filename=')[1].replaceAll('"', '');
-                    FileSaver.saveAs(new Blob([response.data]), filename);
+                    this.erros = []
+                    var filename = response.headers['content-disposition'].split('filename=')[1].replaceAll('"', '')
+                    FileSaver.saveAs(new Blob([response.data]), filename)
+
                 })
                 .catch(error => {
-                    console.log(error);
+                    this.erros = JSON.parse(new TextDecoder().decode(error.response.data))
                 });
 
+            this.isActive = true;
         }
     }
 }
@@ -84,5 +99,20 @@ export default {
     background: -ms-linear-gradient(left, #4b086d, #ACC0FE);
     background: -o-linear-gradient(left, #4b086d, #ACC0FE);
     background: linear-gradient(to right, #4b086d, #ACC0FE);
+}
+
+.white--text {
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.errorMessage {
+    display: flex;
+    flex-direction: column;
+    color: #FFFFFF;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    padding-bottom: 10px;
 }
 </style>
