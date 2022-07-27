@@ -2,7 +2,7 @@
 
     <v-container fluid>
         <ul class="errorMessage" v-for="erro in erros">
-            <v-toolbar-title class="white--text">{{ erro.erro }}: {{ erro.message }}</v-toolbar-title>
+            <v-toolbar-title class="white--text">{{ erro.message }}</v-toolbar-title>
         </ul>
 
         <v-row justify="center" align="center">
@@ -81,7 +81,10 @@ export default {
 
                 })
                 .catch(error => {
-                    this.erros = JSON.parse(new TextDecoder().decode(error.response.data))
+                    this.erros = JSON.parse(new TextDecoder().decode(error.response.data)
+                        .replaceAll("name", "Nome do Sticker")
+                        .replaceAll("imageUrl", "URL do Sticker")
+                        .replaceAll("textoSticker", "Texto do Sticker"));
                 });
 
             this.isActive = true;

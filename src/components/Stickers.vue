@@ -79,6 +79,7 @@ export default {
     cursor: pointer;
 }
 
+
 .donwload-button {
     color: #FFFFFF;
     background: -webkit-linear-gradient(left, #4b086d, #ACC0FE);
