@@ -6,7 +6,7 @@
 
             <v-card class="mx-auto my-12 rounded-xl" color="#151515">
 
-                <v-img :src="sticker.imageUrl" class="rounded-xl" height="500px"></v-img>
+                <v-img :src="sticker.imageUrl" class="rounded-xl" :height="height"></v-img>
 
             </v-card>
             <v-toolbar-title class="white--text">{{ stickers.name }}</v-toolbar-title>
@@ -28,8 +28,17 @@ export default {
             stickers: [],
         }
     },
+    computed: {
+        height() {
+            switch (this.$vuetify.breakpoint.name) {
+                case 'xs': return 800
+                case 'sm': return 800
+                case 'md': return 600
+                case 'lg': return 500
+            }
+        },
+    },
     mounted() {
-        // this.getStickers(this.searchTerm);
         this.getStickers();
     },
     methods: {
@@ -87,6 +96,11 @@ export default {
     background: -ms-linear-gradient(left, #4b086d, #ACC0FE);
     background: -o-linear-gradient(left, #4b086d, #ACC0FE);
     background: linear-gradient(to right, #4b086d, #ACC0FE);
+}
+
+.sticker {
+    min-height: 500px;
+    max-height: 800px;
 }
 </style>
 
